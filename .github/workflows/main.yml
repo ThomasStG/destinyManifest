@@ -1,0 +1,34 @@
+name: Update Destiny Manifest
+ 
+on:
+  schedule:
+    - cron: "0 * * * *"  # hourly — adjust to taste; Bungie updates aren't frequent
+  workflow_dispatch: {}    # lets you trigger it manually from the Actions tab
+ 
+permissions:
+  contents: write  # needed to commit + push + tag
+ 
+jobs:
+  update-manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # full history, so tagging works cleanly
+ 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+ 
+      - run: npm install
+ 
+      - name: Configure git identity
+        run: |
+          git config user.name "manifest-bot"
+          git config user.email "actions@users.noreply.github.com"
+ 
+      - name: Run build script
+        env:
+          BUNGIE_API_KEY: ${{ secrets.BUNGIE_API_KEY }}
+        run: node downloadManifest.js
+ 
