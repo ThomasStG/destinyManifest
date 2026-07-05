@@ -14,11 +14,24 @@ if (!API_KEY) {
 
 const DEFINITIONS = [
   "DestinyInventoryItemDefinition",
+  "DestinyInventoryBucketDefinition",
   "DestinyStatDefinition",
   "DestinyStatGroupDefinition",
-  "DestinySandboxPerkDefinition",
-  "DestinyPlugSetDefinition",
   "DestinyDamageTypeDefinition",
+  "DestinySocketTypeDefinition",
+  "DestinyPlugSetDefinition",
+  "DestinySandboxPerkDefinition",
+  "DestinyTraitDefinition",
+  "DestinyClassDefinition",
+  "DestinyRaceDefinition",
+  "DestinySeasonDefinition",
+  "DestinyCollectibleDefinition",
+  "DestinyRecordDefinition",
+  "DestinyPresentationNodeDefinition",
+  "DestinyVendorDefinition",
+  "DestinyActivityDefinition",
+  "DestinyDestinationDefinition",
+  "DestinyObjectiveDefinition",
 ];
 
 // Definitions large enough to need splitting. Add more here if a table
@@ -131,14 +144,10 @@ async function main() {
     const url = `https://www.bungie.net${paths[definition]}`;
     const json = await fetchJson(url, definition);
 
-    if (SPLIT_DEFINITIONS.has(definition)) {
-      await writeSplitDefinition(definition, json);
-    } else {
-      await fs.writeFile(
-        path.join(MANIFEST_DIR, `${definition}.json`),
-        JSON.stringify(json),
-      );
-    }
+    const jsonString = JSON.stringify(json);
+    const sizeBytes = Buffer.byteLength(jsonString);
+
+    await writeSplitDefinition(definition, json);
     console.log(`Saved ${definition}`);
   }
 
