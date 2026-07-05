@@ -2,11 +2,11 @@ name: Update Destiny Manifest
  
 on:
   schedule:
-    - cron: "0 * * * *"  # hourly — adjust to taste; Bungie updates aren't frequent
-  workflow_dispatch: {}    # lets you trigger it manually from the Actions tab
+    - cron: "* 0 * * *"
+  workflow_dispatch: {}
  
 permissions:
-  contents: write  # needed to commit + push + tag
+  contents: write
  
 jobs:
   update-manifest:
@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # full history, so tagging works cleanly
+          fetch-depth: 0
  
       - uses: actions/setup-node@v4
         with:
