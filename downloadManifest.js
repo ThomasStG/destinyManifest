@@ -40,7 +40,7 @@ const SPLIT_DEFINITIONS = new Set(["DestinyInventoryItemDefinition"]);
 
 // Stay well under jsDelivr's ~50MB ceiling to leave margin for JSON
 // overhead and future growth of the table.
-const MAX_CHUNK_BYTES = 35 * 1024 * 1024;
+const MAX_CHUNK_BYTES = 20 * 1024 * 1024;
 
 const MANIFEST_DIR = path.join(process.cwd(), "manifest");
 
